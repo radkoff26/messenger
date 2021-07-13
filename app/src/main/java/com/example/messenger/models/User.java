@@ -1,24 +1,26 @@
 package com.example.messenger.models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private Integer id;
     private String nickname;
     private String login;
     private String password;
-    private String chat_container_name;
-    private String last_online;
-    private String avatar_url;
-    private Boolean is_online;
+    private String chatContainerName;
+    private String lastOnline;
+    private String avatarUrl;
+    private Boolean isOnline;
 
-    public User(Integer id, String nickname, String login, String password, String chat_container_name, String last_online, String avatar_url, Boolean is_online) {
+    public User(Integer id, String nickname, String login, String password, String chatContainerName, String lastOnline, String avatarUrl, Boolean isOnline) {
         this.id = id;
         this.nickname = nickname;
         this.login = login;
         this.password = password;
-        this.chat_container_name = chat_container_name;
-        this.last_online = last_online;
-        this.avatar_url = avatar_url;
-        this.is_online = is_online;
+        this.chatContainerName = chatContainerName;
+        this.lastOnline = lastOnline;
+        this.avatarUrl = avatarUrl;
+        this.isOnline = isOnline;
     }
 
     public User(String login, String password) {
@@ -68,34 +70,48 @@ public class User {
     }
 
     public String getChatContainerName() {
-        return chat_container_name;
+        return chatContainerName;
     }
 
     public void setChatContainerName(String chat_container_name) {
-        this.chat_container_name = chat_container_name;
+        this.chatContainerName = chat_container_name;
     }
 
     public String getLastOnline() {
-        return last_online;
+        return lastOnline;
     }
 
     public void setLastOnline(String last_online) {
-        this.last_online = last_online;
+        this.lastOnline = last_online;
     }
 
     public String getAvatarUrl() {
-        return avatar_url;
+        return avatarUrl;
     }
 
     public void setAvatarUrl(String avatar_url) {
-        this.avatar_url = avatar_url;
+        this.avatarUrl = avatar_url;
     }
 
     public Boolean getIsOnline() {
-        return is_online;
+        return isOnline;
     }
 
     public void setIsOnline(Boolean is_online) {
-        this.is_online = is_online;
+        this.isOnline = is_online;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", chat_container_name='" + chatContainerName + '\'' +
+                ", last_online='" + lastOnline + '\'' +
+                ", avatar_url='" + avatarUrl + '\'' +
+                ", is_online=" + isOnline +
+                '}';
     }
 }

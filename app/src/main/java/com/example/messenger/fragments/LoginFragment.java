@@ -1,10 +1,12 @@
 package com.example.messenger.fragments;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentController;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,10 +15,14 @@ import androidx.loader.content.AsyncTaskLoader;
 import androidx.loader.content.Loader;
 
 import android.os.SystemClock;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.messenger.MainActivity;
@@ -36,6 +42,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.example.messenger.models.Constants.BUNDLE_ARGUMENT;
+import static com.example.messenger.models.Constants.BUNDLE_ERROR;
+import static com.example.messenger.models.Constants.BUNDLE_TYPE;
+import static com.example.messenger.models.Constants.BUNDLE_TYPE_LOGIN;
 import static com.example.messenger.models.Constants.TOKEN_VALUE;
 
 
@@ -45,6 +55,7 @@ public class LoginFragment extends Fragment {
     private TextInputLayout login, password;
     private TextInputEditText login_input, password_input;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,6 +68,17 @@ public class LoginFragment extends Fragment {
         login_input = view.findViewById(R.id.login_input);
         password_input = view.findViewById(R.id.password_input);
 
+        Bundle extra = getArguments();
+        if (extra != null && extra.getBoolean(BUNDLE_ERROR)) {
+            password.setError(getString(R.string.wrong_data));
+        }
+
+        password_input.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                password.setError(null);
+            }
+        });
+
         toRegisterFragment.setOnClickListener(v -> {
             getActivity().getSupportFragmentManager().beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -65,33 +87,33 @@ public class LoginFragment extends Fragment {
         });
 
 
-
         toLogin.setOnClickListener(v -> {
             String mLogin = login_input.getText().toString();
             String mPassword = password_input.getText().toString();
             Crypt crypt = new Crypt(RestCrypt.KEY);
             User user = new User(mLogin, crypt.encode(mPassword));
-            LoaderManager.getInstance(this).initLoader(1, Bundle.EMPTY, new StubLoaderCallbacks(user));
+
+            LoaderFragment fragment = new LoaderFragment();
+            Bundle arguments = new Bundle();
+            arguments.putSerializable(BUNDLE_ARGUMENT, user);
+            arguments.putString(BUNDLE_TYPE, BUNDLE_TYPE_LOGIN);
+            fragment.setArguments(arguments);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .add(R.id.fragment, fragment)
+                    .commit();
         });
 
         return view;
     }
 
-    public boolean validateInputs() {
-        String mLogin = login_input.getText().toString();
-        String mPassword = password_input.getText().toString();
-        if (mPassword.trim().contains(" ")) {
-            password.setError(getString(R.string.password_helper_text));
-            return false;
-        }
-        return false;
-    }
 
-    public static class StubLoader extends AsyncTaskLoader<User> {
+    public static class LoginLoader extends AsyncTaskLoader<User> {
 
-        private User user;
+        private User user, result;
+        private boolean f = false;
 
-        public StubLoader(Context context, User user) {
+        public LoginLoader(Context context, User user) {
             super(context);
             this.user = user;
         }
@@ -104,52 +126,54 @@ public class LoginFragment extends Fragment {
 
         @Override
         public User loadInBackground() {
-            // emulate long-running operation
-            final User[] result = {null};
+            result = null;
+            f = false;
             Retrofit retrofit = new Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://192.168.0.120:8080")
+                    .baseUrl("http://192.168.0.113:8080")
                     .build();
             ClientAPI clientAPI = retrofit.create(ClientAPI.class);
             clientAPI.login(TOKEN_VALUE, user)
                     .enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
-                            result[0] = response.body();
+                            result = response.body();
+                            f = true;
                         }
 
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
-                            result[0] = new User();
+                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                            result = new User();
+                            f = true;
                         }
                     });
-            while (result[0] == null) {
+            while (!f) {
             }
-            return result[0];
+            return result;
         }
     }
 
-    private class StubLoaderCallbacks implements LoaderManager.LoaderCallbacks<User> {
+    private class LoginLoaderCallbacks implements LoaderManager.LoaderCallbacks<User> {
 
         private User user;
 
-        public StubLoaderCallbacks(User user) {
+        public LoginLoaderCallbacks(User user) {
             this.user = user;
         }
 
         @Override
         public Loader<User> onCreateLoader(int id, Bundle args) {
-            return new StubLoader(getActivity(), user);
+            return new LoginLoader(getActivity(), user);
         }
 
         @Override
         public void onLoadFinished(Loader<User> loader, User data) {
-            Toast.makeText(getContext(), data.getNickname(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), data.toString(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onLoaderReset(Loader<User> loader) {
-            // Do nothing
         }
     }
 }

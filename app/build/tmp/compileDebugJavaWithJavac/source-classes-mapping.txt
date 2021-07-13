@@ -1,5 +1,8 @@
 com/example/messenger/fragments/RegisterFragment.java
  com.example.messenger.fragments.RegisterFragment
+ com.example.messenger.fragments.RegisterFragment$RegistrationLoader
+ com.example.messenger.fragments.RegisterFragment$RegistrationLoader$1
+ com.example.messenger.fragments.RegisterFragment$RegistrationLoaderCallbacks
 com/example/messenger/models/Constants.java
  com.example.messenger.models.Constants
 com/example/messenger/models/Chat.java
@@ -8,6 +11,7 @@ com/example/messenger/rest/DataLoaderCallbacks.java
  com.example.messenger.rest.DataLoaderCallbacks
 com/example/messenger/fragments/MainFragment.java
  com.example.messenger.fragments.MainFragment
+ com.example.messenger.fragments.MainFragment$1
 com/example/messenger/MainActivity.java
  com.example.messenger.MainActivity
 com/example/messenger/models/DateConverter.java
@@ -29,16 +33,15 @@ com/example/messenger/BuildConfig.java
 com/example/messenger/rest/ServerInteraction.java
  com.example.messenger.rest.ServerInteraction
  com.example.messenger.rest.ServerInteraction$1
- com.example.messenger.rest.ServerInteraction$2
 com/example/messenger/crypt/Crypt.java
  com.example.messenger.crypt.Crypt
 com/example/messenger/fragments/Profile.java
  com.example.messenger.fragments.Profile
 com/example/messenger/fragments/LoginFragment.java
  com.example.messenger.fragments.LoginFragment
- com.example.messenger.fragments.LoginFragment$StubLoader
- com.example.messenger.fragments.LoginFragment$StubLoader$1
- com.example.messenger.fragments.LoginFragment$StubLoaderCallbacks
+ com.example.messenger.fragments.LoginFragment$LoginLoader
+ com.example.messenger.fragments.LoginFragment$LoginLoader$1
+ com.example.messenger.fragments.LoginFragment$LoginLoaderCallbacks
 com/example/messenger/fragments/Messages.java
  com.example.messenger.fragments.Messages
 com/example/messenger/rest/ClientAPI.java
@@ -49,3 +52,8 @@ com/example/messenger/models/MessageSending.java
  com.example.messenger.models.MessageSending
 com/example/messenger/fragments/Contacts.java
  com.example.messenger.fragments.Contacts
+com/example/messenger/fragments/LoaderFragment.java
+ com.example.messenger.fragments.LoaderFragment
+ com.example.messenger.fragments.LoaderFragment$1
+ com.example.messenger.fragments.LoaderFragment$2
+ com.example.messenger.fragments.LoaderFragment$3

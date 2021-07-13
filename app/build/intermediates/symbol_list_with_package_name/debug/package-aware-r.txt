@@ -28,6 +28,7 @@ anim design_bottom_sheet_slide_out
 anim design_snackbar_in
 anim design_snackbar_out
 anim fragment_fast_out_extra_slow_in
+anim loader_rotating
 anim mtrl_bottom_sheet_slide_in
 anim mtrl_bottom_sheet_slide_out
 anim mtrl_card_lowers_interpolator
@@ -1705,6 +1706,7 @@ drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
 drawable file
+drawable ic_baseline_message_24
 drawable ic_clock_black_24dp
 drawable ic_keyboard_black_24dp
 drawable ic_launcher_background
@@ -1714,6 +1716,7 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable java
+drawable loader
 drawable material_cursor_drawable
 drawable material_ic_calendar_black_24dp
 drawable material_ic_clear_black_24dp
@@ -1960,6 +1963,7 @@ id line3
 id linear
 id listMode
 id list_item
+id loader
 id login
 id login_input
 id masked
@@ -2024,6 +2028,7 @@ id navigation_bar_item_small_label_view
 id navigation_header_container
 id never
 id nickname
+id nickname_input
 id noScroll
 id none
 id normal
@@ -2033,7 +2038,6 @@ id notification_main_column_container
 id off
 id on
 id outline
-id outlinedButton
 id outward
 id packed
 id pager
@@ -2045,6 +2049,7 @@ id parent_matrix
 id password
 id password_input
 id password_repeat
+id password_repeat_input
 id password_toggle
 id path
 id pathRelative
@@ -2161,6 +2166,7 @@ id title
 id titleDividerNoCustom
 id title_template
 id toLogin
+id toRegister
 id toRegisterFragment
 id toggle
 id top
@@ -2275,6 +2281,7 @@ layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout fragment_contacts
+layout fragment_loader
 layout fragment_login
 layout fragment_main
 layout fragment_messages
@@ -2396,6 +2403,7 @@ string character_counter_overflowed_content_description
 string character_counter_pattern
 string chip_text
 string clear_text_end_icon_content_description
+string empty_nickname_error
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
@@ -2404,6 +2412,7 @@ string hide_bottom_view_on_scroll_behavior
 string icon_content_description
 string item_view_role_description
 string login
+string login_error_text
 string login_upper
 string material_clock_display_divider
 string material_clock_toggle_content_description
@@ -2462,7 +2471,8 @@ string mtrl_picker_toggle_to_text_input_mode
 string mtrl_picker_toggle_to_year_selection
 string nickname
 string password
-string password_helper_text
+string password_error_text
+string password_mismatch_error
 string password_repeat
 string password_toggle_content_description
 string path_password_eye
@@ -2473,6 +2483,8 @@ string register
 string registration_upper
 string search_menu_title
 string status_bar_notification_info_overflow
+string user_exists
+string wrong_data
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style AndroidThemeColorAccentYellow

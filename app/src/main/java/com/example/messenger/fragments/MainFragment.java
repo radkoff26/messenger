@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.messenger.MainActivity;
 import com.example.messenger.R;
 import com.example.messenger.adapters.FragmentAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -33,7 +34,24 @@ public class MainFragment extends Fragment {
         fragmentAdapter = new FragmentAdapter(this);
         viewPager = view.findViewById(R.id.pager);
         viewPager.setAdapter(fragmentAdapter);
+        viewPager.setCurrentItem(0);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                ((MainActivity) getActivity()).removeButLastFragment();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> {
                     switch (position) {
