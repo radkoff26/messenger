@@ -1,6 +1,9 @@
 package com.example.messenger.rest;
 
+import com.example.messenger.models.Chat;
 import com.example.messenger.models.User;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -26,5 +29,17 @@ public interface ClientAPI {
     Call<User> login(
             @Header("token") String token,
             @Body User user
+    );
+
+    @POST("/getChats")
+    Call<List<Chat>> getChats(
+            @Header("token") String token,
+            @Body Integer userId
+    );
+
+    @POST("/getNotCheckedNumber")
+    Call<Integer> getNotCheckedNumber(
+            @Header("token") String token,
+            @Body Integer userId
     );
 }

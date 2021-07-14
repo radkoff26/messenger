@@ -1700,12 +1700,14 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable checked
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
 drawable file
+drawable ic_baseline_circle_24
 drawable ic_baseline_message_24
 drawable ic_clock_black_24dp
 drawable ic_keyboard_black_24dp
@@ -1750,9 +1752,11 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable sent
 drawable test_custom_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
+drawable user
 id ALT
 id BOTTOM_END
 id BOTTOM_START
@@ -1835,6 +1839,7 @@ id auto
 id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
+id avatar
 id barrier
 id baseline
 id beginOnFirstDraw
@@ -1851,6 +1856,8 @@ id center_horizontal
 id center_vertical
 id chain
 id chains
+id chatLayout
+id chats
 id checkbox
 id checked
 id chip
@@ -1955,6 +1962,7 @@ id item_touch_helper_previous_elevation
 id jumpToEnd
 id jumpToStart
 id labeled
+id lastMessage
 id layout
 id left
 id leftToRight
@@ -2121,6 +2129,7 @@ id startToEnd
 id startVertical
 id staticLayout
 id staticPostLayout
+id status
 id status_bar_latest_event_content
 id stop
 id stretch
@@ -2185,6 +2194,7 @@ id uniform
 id unlabeled
 id up
 id useLogo
+id userName
 id view_offset_helper
 id view_tree_lifecycle_owner
 id view_tree_saved_state_registry_owner
@@ -2264,6 +2274,7 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_main
+layout chat_item
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog

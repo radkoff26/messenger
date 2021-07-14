@@ -1491,6 +1491,21 @@
             ]
         },
         {
+            "outputFile": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\values-ldrtl-v17_values-ldrtl-v17.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\Users\\radko\\.gradle\\caches\\transforms-2\\files-2.1\\10046aad9e73cbf22653afacdcab8838\\material-1.4.0\\res\\values-ldrtl-v17\\values-ldrtl-v17.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,191",
+                        "endColumns": "135,140",
+                        "endOffsets": "186,327"
+                    }
+                }
+            ]
+        },
+        {
             "outputFile": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\values-pt-rPT_values-pt-rPT.arsc.flat",
             "map": [
                 {
@@ -1544,21 +1559,6 @@
                         "startOffsets": "7528",
                         "endColumns": "100",
                         "endOffsets": "7624"
-                    }
-                }
-            ]
-        },
-        {
-            "outputFile": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\values-ldrtl-v17_values-ldrtl-v17.arsc.flat",
-            "map": [
-                {
-                    "source": "C:\\Users\\radko\\.gradle\\caches\\transforms-2\\files-2.1\\10046aad9e73cbf22653afacdcab8838\\material-1.4.0\\res\\values-ldrtl-v17\\values-ldrtl-v17.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,191",
-                        "endColumns": "135,140",
-                        "endOffsets": "186,327"
                     }
                 }
             ]
@@ -1680,6 +1680,21 @@
             ]
         },
         {
+            "outputFile": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\values-w480dp-port-v13_values-w480dp-port-v13.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\Users\\radko\\.gradle\\caches\\transforms-2\\files-2.1\\10046aad9e73cbf22653afacdcab8838\\material-1.4.0\\res\\values-w480dp-port-v13\\values-w480dp-port-v13.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,114,170,226,293,358,413,478",
+                        "endColumns": "58,55,55,66,64,54,64,68",
+                        "endOffsets": "109,165,221,288,353,408,473,542"
+                    }
+                }
+            ]
+        },
+        {
             "outputFile": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\values-bg_values-bg.arsc.flat",
             "map": [
                 {
@@ -1733,21 +1748,6 @@
                         "startOffsets": "7565",
                         "endColumns": "100",
                         "endOffsets": "7661"
-                    }
-                }
-            ]
-        },
-        {
-            "outputFile": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\values-w480dp-port-v13_values-w480dp-port-v13.arsc.flat",
-            "map": [
-                {
-                    "source": "C:\\Users\\radko\\.gradle\\caches\\transforms-2\\files-2.1\\10046aad9e73cbf22653afacdcab8838\\material-1.4.0\\res\\values-w480dp-port-v13\\values-w480dp-port-v13.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,114,170,226,293,358,413,478",
-                        "endColumns": "58,55,55,66,64,54,64,68",
-                        "endOffsets": "109,165,221,288,353,408,473,542"
                     }
                 }
             ]

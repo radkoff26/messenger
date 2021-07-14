@@ -3,17 +3,17 @@ package com.example.messenger.models;
 public class Message {
     private Integer id;
     private String text;
-    private Integer author_id;
-    private Boolean is_watched;
-    private Boolean is_removed;
+    private Integer authorId;
+    private Boolean isWatched;
+    private Boolean isRemoved;
     private String time;
 
-    public Message(Integer id, String text, Integer author_id, Boolean is_watched, Boolean is_removed, String time) {
+    public Message(Integer id, String text, Integer authorId, Boolean isWatched, Boolean isRemoved, String time) {
         this.id = id;
         this.text = text;
-        this.author_id = author_id;
-        this.is_watched = is_watched;
-        this.is_removed = is_removed;
+        this.authorId = authorId;
+        this.isWatched = isWatched;
+        this.isRemoved = isRemoved;
         this.time = time;
     }
 
@@ -34,27 +34,27 @@ public class Message {
     }
 
     public Integer getAuthorId() {
-        return author_id;
+        return authorId;
     }
 
     public void setAuthorId(Integer author_id) {
-        this.author_id = author_id;
+        this.authorId = author_id;
     }
 
     public Boolean getIsWatched() {
-        return is_watched;
+        return isWatched;
     }
 
     public void setIsWatched(Boolean is_watched) {
-        this.is_watched = is_watched;
+        this.isWatched = is_watched;
     }
 
     public Boolean getIsRemoved() {
-        return is_removed;
+        return isRemoved;
     }
 
     public void setIsRemoved(Boolean is_removed) {
-        this.is_removed = is_removed;
+        this.isRemoved = is_removed;
     }
 
     public String getTime() {
@@ -63,5 +63,17 @@ public class Message {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", author_id=" + authorId +
+                ", is_watched=" + isWatched +
+                ", is_removed=" + isRemoved +
+                ", time='" + time + '\'' +
+                '}';
     }
 }

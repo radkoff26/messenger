@@ -4,9 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.messenger.fragments.Contacts;
-import com.example.messenger.fragments.Messages;
-import com.example.messenger.fragments.Profile;
+import com.example.messenger.fragments.ContactFragment;
+import com.example.messenger.fragments.ChatFragment;
+import com.example.messenger.fragments.ProfileFragment;
 
 public class FragmentAdapter extends FragmentStateAdapter {
 
@@ -19,11 +19,11 @@ public class FragmentAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new Messages();
+                return new ChatFragment();
             case 1:
-                return new Contacts();
+                return new ContactFragment();
             case 2:
-                return new Profile();
+                return new ProfileFragment();
         }
         return new Fragment();
     }
