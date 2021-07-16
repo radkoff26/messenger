@@ -16,4 +16,5 @@ public class Constants {
     public static final String BUNDLE_TYPE_IS_LOGIN_CHECK = "is_logged_in";
     public static final String BUNDLE_ARGUMENT = "argument";
     public static final String BUNDLE_ERROR = "error";
+    public static final String BUNDLE_CHAT_ID = "chat_id";
 }

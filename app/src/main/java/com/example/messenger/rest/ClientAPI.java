@@ -1,6 +1,8 @@
 package com.example.messenger.rest;
 
 import com.example.messenger.models.Chat;
+import com.example.messenger.models.Message;
+import com.example.messenger.models.MessageSending;
 import com.example.messenger.models.User;
 
 import java.util.List;
@@ -41,5 +43,59 @@ public interface ClientAPI {
     Call<Integer> getNotCheckedNumber(
             @Header("token") String token,
             @Body Integer userId
+    );
+
+    @POST("/getMessages")
+    Call<List<Message>> getMessages(
+            @Header("token") String token,
+            @Body String chatId
+    );
+
+    @POST("/getPersonalData")
+    Call<User> getUser(
+            @Header("token") String token,
+            @Body Integer userId
+    );
+
+    @POST("/sendMessage")
+    Call<ResponseBody> sendMessage(
+            @Header("token") String token,
+            @Body MessageSending message
+    );
+
+    @POST("/watchMessage")
+    Call<ResponseBody> watchMessage(
+            @Header("token") String token,
+            @Body String body
+    );
+
+    @POST("/removeMessage")
+    Call<ResponseBody> removeMessage(
+            @Header("token") String token,
+            @Body String body
+    );
+
+    @POST("/goOnline")
+    Call<ResponseBody> goOnline(
+            @Header("token") String token,
+            @Body Integer user_id
+    );
+
+    @POST("/goOffline")
+    Call<ResponseBody> goOffline(
+            @Header("token") String token,
+            @Body Integer user_id
+    );
+
+    @POST("/isUserOnline")
+    Call<Boolean> isUserOnline(
+            @Header("token") String token,
+            @Body Integer user_id
+    );
+
+    @POST("/getUsers")
+    Call<List<User>> getUsers(
+            @Header("token") String token,
+            @Body String body
     );
 }

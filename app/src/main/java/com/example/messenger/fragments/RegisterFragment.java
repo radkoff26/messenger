@@ -145,6 +145,11 @@ public class RegisterFragment extends Fragment {
                     .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show();
             return false;
         }
+        if (mPassword.length() < 6) {
+            Snackbar.make(getView(), getString(R.string.password_length_error), Snackbar.LENGTH_SHORT)
+                    .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show();
+            return false;
+        }
         return true;
     }
 

@@ -26,6 +26,7 @@ import com.example.messenger.models.User;
 import com.example.messenger.models.UserLoggedIn;
 import com.example.messenger.rest.ClientAPI;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -155,6 +156,18 @@ public class LoaderFragment extends Fragment {
                                             .add(R.id.fragment, new MainFragment())
                                             .commit();
                                     ((MainActivity) getActivity()).removeButLastFragment();
+                                    clientAPI.goOnline(TOKEN_VALUE, user.getId())
+                                            .enqueue(new Callback<ResponseBody>() {
+                                                @Override
+                                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                                }
+                                            });
                                     return;
                                 }
                                 onFailure(call, new Exception());

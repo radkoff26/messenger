@@ -2,7 +2,6 @@ package com.example.messenger.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.messenger.MainActivity;
 import com.example.messenger.R;
-import com.example.messenger.adapters.ChatRecyclerViewAdapter;
 import com.example.messenger.adapters.FragmentAdapter;
 import com.example.messenger.models.Chat;
 import com.example.messenger.models.UserLoggedIn;
@@ -23,9 +21,6 @@ import com.example.messenger.rest.ClientAPI;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -46,6 +41,8 @@ public class MainFragment extends Fragment {
     private Runnable updateServer;
     private Handler handler;
     private ImageView loader;
+    private Retrofit retrofit;
+    private ClientAPI clientAPI;
     public static List<Chat> mChats = null;
 
     @Nullable
@@ -57,37 +54,58 @@ public class MainFragment extends Fragment {
 
         loader = view.findViewById(R.id.loader);
 
+        ((MainActivity) getActivity()).setDefaultActionBar();
+
         handler = new Handler();
 
+        retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(BASE_URL)
+                .build();
+        clientAPI = retrofit.create(ClientAPI.class);
+
         updateServer = () -> {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(BASE_URL)
-                    .build();
-            ClientAPI clientAPI = retrofit.create(ClientAPI.class);
-
-            clientAPI.getNotCheckedNumber(TOKEN_VALUE, UserLoggedIn.getUser(getContext()).getId())
-                    .enqueue(new Callback<Integer>() {
-                        @Override
-                        public void onResponse(Call<Integer> call, Response<Integer> response) {
-                            Integer sum = response.body();
-
-                            if (sum != null && !sum.equals(sumOfNotChecked)) {
-                                setMessageBadge(sum);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Integer> call, Throwable t) {
-
-                        }
-                    });
-            handler.postDelayed(updateServer, 20000);
+            updateData();
+            handler.postDelayed(updateServer, 2000);
         };
 
-        updateServer.run();
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.post(updateServer);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(updateServer);
+    }
+
+    public void updateData() {
+
+        clientAPI.getNotCheckedNumber(TOKEN_VALUE, UserLoggedIn.getUser(getContext()).getId())
+                .enqueue(new Callback<Integer>() {
+                    @Override
+                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        Integer sum = response.body();
+
+                        if (sum != null) {
+                            setMessageBadge(sum);
+                        }
+
+                        if (sum != null && !sum.equals(sumOfNotChecked)) {
+                            // TODO: 16.07.2021 Here is gonna be notification call
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Integer> call, Throwable t) {
+
+                    }
+                });
     }
 
     @Override
@@ -120,9 +138,6 @@ public class MainFragment extends Fragment {
                             tab.setText("Messages");
                             break;
                         case 1:
-                            tab.setText("Contacts");
-                            break;
-                        case 2:
                             tab.setText("Profile");
                             break;
                     }

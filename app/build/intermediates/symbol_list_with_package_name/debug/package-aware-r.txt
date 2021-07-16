@@ -1692,6 +1692,7 @@ drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
+drawable back
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -1700,12 +1701,14 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable chatter_message
 drawable checked
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
+drawable edit_text_bg
 drawable file
 drawable ic_baseline_circle_24
 drawable ic_baseline_message_24
@@ -1719,6 +1722,7 @@ drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable java
 drawable loader
+drawable magnify
 drawable material_cursor_drawable
 drawable material_ic_calendar_black_24dp
 drawable material_ic_clear_black_24dp
@@ -1752,11 +1756,15 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable pencil
+drawable send
 drawable sent
 drawable test_custom_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 drawable user
+drawable user_message
+drawable user_round
 id ALT
 id BOTTOM_END
 id BOTTOM_START
@@ -1840,6 +1848,7 @@ id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
 id avatar
+id back
 id barrier
 id baseline
 id beginOnFirstDraw
@@ -1856,6 +1865,7 @@ id center_horizontal
 id center_vertical
 id chain
 id chains
+id chat
 id chatLayout
 id chats
 id checkbox
@@ -1963,6 +1973,7 @@ id jumpToEnd
 id jumpToStart
 id labeled
 id lastMessage
+id lastOnlineStatus
 id layout
 id left
 id leftToRight
@@ -1973,7 +1984,9 @@ id listMode
 id list_item
 id loader
 id login
+id loginWithAt
 id login_input
+id main_layout
 id masked
 id material_clock_display
 id material_clock_face
@@ -1996,6 +2009,7 @@ id material_timepicker_view
 id material_value_index
 id media_actions
 id message
+id message_text
 id middle
 id mini
 id month_grid
@@ -2088,6 +2102,8 @@ id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
 id scrollable
+id search
+id searchInput
 id search_badge
 id search_bar
 id search_button
@@ -2098,9 +2114,11 @@ id search_mag_icon
 id search_plate
 id search_src_text
 id search_voice_btn
+id secondary_layout
 id select_dialog_listview
 id selected
 id selection_type
+id sendMessage
 id shortcut
 id showCustom
 id showHome
@@ -2157,6 +2175,7 @@ id test_radiobutton_app_button_tint
 id text
 id text2
 id textEnd
+id textOfMessage
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
@@ -2195,6 +2214,9 @@ id unlabeled
 id up
 id useLogo
 id userName
+id user_avatar
+id user_status
+id users
 id view_offset_helper
 id view_tree_lifecycle_owner
 id view_tree_saved_state_registry_owner
@@ -2274,8 +2296,11 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_main
+layout chat_action_bar
 layout chat_item
 layout custom_dialog
+layout default_action_bar
+layout default_back_action_bar
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
 layout design_layout_snackbar
@@ -2291,6 +2316,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout fragment_chat
 layout fragment_contacts
 layout fragment_loader
 layout fragment_login
@@ -2312,6 +2338,7 @@ layout material_time_input
 layout material_timepicker
 layout material_timepicker_dialog
 layout material_timepicker_textinput_display
+layout message_item
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
 layout mtrl_alert_dialog_title
@@ -2375,6 +2402,7 @@ layout text_view_with_line_height_from_layout
 layout text_view_with_line_height_from_style
 layout text_view_with_theme_line_height
 layout text_view_without_line_height
+layout user_item
 mipmap ic_launcher
 mipmap ic_launcher_round
 plurals mtrl_badge_content_description
@@ -2483,6 +2511,7 @@ string mtrl_picker_toggle_to_year_selection
 string nickname
 string password
 string password_error_text
+string password_length_error
 string password_mismatch_error
 string password_repeat
 string password_toggle_content_description
@@ -2968,6 +2997,7 @@ style Theme_MaterialComponents_Light_NoActionBar_Bridge
 style Theme_MaterialComponents_NoActionBar
 style Theme_MaterialComponents_NoActionBar_Bridge
 style Theme_Messenger
+style ThemeOverlay_App_MaterialAlertDialog
 style ThemeOverlay_AppCompat
 style ThemeOverlay_AppCompat_ActionBar
 style ThemeOverlay_AppCompat_Dark
