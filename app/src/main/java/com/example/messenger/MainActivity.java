@@ -1,62 +1,60 @@
 package com.example.messenger;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.messenger.adapters.FragmentAdapter;
 import com.example.messenger.fragments.ChatFragment;
-import com.example.messenger.fragments.ContactFragment;
+import com.example.messenger.fragments.UsersFragment;
 import com.example.messenger.fragments.LoaderFragment;
-import com.example.messenger.fragments.LoginFragment;
 import com.example.messenger.fragments.MainFragment;
-import com.example.messenger.fragments.RegisterFragment;
 import com.example.messenger.models.DateConverter;
 import com.example.messenger.models.User;
 import com.example.messenger.models.UserLoggedIn;
 import com.example.messenger.rest.ClientAPI;
-import com.example.messenger.rest.ServerInteraction;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+import com.example.messenger.view_models.RoundedImageView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
+
+import org.apache.commons.io.IOUtil;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.messenger.models.Constants.BASE_URL;
-import static com.example.messenger.models.Constants.BUNDLE_TYPE;
-import static com.example.messenger.models.Constants.BUNDLE_TYPE_IS_LOGIN_CHECK;
-import static com.example.messenger.models.Constants.TOKEN_VALUE;
+import static com.example.messenger.models.Constants.*;
 
 public class MainActivity extends AppCompatActivity {
 
     private FrameLayout actionBar;
+    private Retrofit retrofit;
+    private ClientAPI clientAPI;
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +63,16 @@ public class MainActivity extends AppCompatActivity {
 
         actionBar = findViewById(R.id.action_bar);
 
+        gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         actionBar.setVisibility(View.GONE);
+        retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(BASE_URL)
+                .build();
+        clientAPI = retrofit.create(ClientAPI.class);
 
         LoaderFragment fragment = new LoaderFragment();
         Bundle arguments = new Bundle();
@@ -92,53 +99,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        User user = UserLoggedIn.getUser(getApplicationContext());
-        if (user != null) {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(BASE_URL)
-                    .build();
-            ClientAPI clientAPI = retrofit.create(ClientAPI.class);
-            clientAPI.goOnline(TOKEN_VALUE, user.getId())
-                    .enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Uri content_describer = data.getData();
+            try {
+                InputStream in = getContentResolver().openInputStream(content_describer);
 
-                        }
+                byte[] dataFile = IOUtil.toByteArray(in);
 
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), dataFile);
+                MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", "java", requestBody);
 
-                        }
-                    });
+                clientAPI.setAvatar(TOKEN_VALUE, UserLoggedIn.getUser(getApplicationContext()).getId(), fileToUpload)
+                        .enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                String url = response.body();
+                                SharedPreferences sp = getSharedPreferences(USER_DATA, MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.putString(AVATAR_URL, url);
+                                editor.apply();
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                                System.out.println(t.getMessage());
+                            }
+                        });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        User user = UserLoggedIn.getUser(getApplicationContext());
-        if (user != null) {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(BASE_URL)
-                    .build();
-            ClientAPI clientAPI = retrofit.create(ClientAPI.class);
-            clientAPI.goOffline(TOKEN_VALUE, user.getId())
-                    .enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                        }
-                    });
-        }
-        super.onPause();
     }
 
     @Override
@@ -150,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (fragments.size() == 2) {
             if (fragments.get(0).getClass() == MainFragment.class && fragments.get(1).getClass() != ChatFragment.class
-                    && fragments.get(1).getClass() != ContactFragment.class) {
+                    && fragments.get(1).getClass() != UsersFragment.class) {
                 System.out.println(fragments.get(0).getClass());
                 System.out.println(fragments.get(1).getClass());
                 finish();
@@ -175,14 +167,18 @@ public class MainActivity extends AppCompatActivity {
             actionBar.removeAllViews();
             actionBar.setVisibility(View.VISIBLE);
             LinearLayout ll = (LinearLayout) getLayoutInflater().inflate(R.layout.chat_action_bar, new FrameLayout(getBaseContext()), false);
-            ll.findViewById(R.id.back).setOnClickListener(v -> {
-                onBackPressed();
-            });
+            ll.findViewById(R.id.back).setOnClickListener(v -> onBackPressed());
             ((TextView) ll.findViewById(R.id.nickname)).setText(user.getNickname());
             try {
                 ((TextView) ll.findViewById(R.id.lastOnlineStatus)).setText(user.getIsOnline() ? "online" : DateConverter.lastOnline(user.getLastOnline()));
             } catch (ParseException e) {
                 ((TextView) ll.findViewById(R.id.lastOnlineStatus)).setText("-");
+            }
+            if (user.getAvatarUrl() != null && !user.getAvatarUrl().equals("null")) {
+                Picasso.with(getApplicationContext())
+                        .load(BASE_URL + "/getAvatar?url=" + user.getAvatarUrl())
+                        .placeholder(R.drawable.user_round)
+                        .into((RoundedImageView) ll.findViewById(R.id.user_avatar));
             }
             actionBar.addView(ll);
         }
@@ -196,9 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setDefaultBackActionBar() {
         LinearLayout ll = (LinearLayout) getLayoutInflater().inflate(R.layout.default_back_action_bar, new FrameLayout(getBaseContext()), false);
-        ll.findViewById(R.id.back).setOnClickListener(v -> {
-            onBackPressed();
-        });
+        ll.findViewById(R.id.back).setOnClickListener(v -> onBackPressed());
         actionBar.removeAllViews();
         actionBar.setVisibility(View.VISIBLE);
         actionBar.addView(ll);

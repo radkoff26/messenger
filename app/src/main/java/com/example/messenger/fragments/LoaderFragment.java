@@ -7,15 +7,12 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.messenger.MainActivity;
 import com.example.messenger.R;
@@ -26,7 +23,6 @@ import com.example.messenger.models.User;
 import com.example.messenger.models.UserLoggedIn;
 import com.example.messenger.rest.ClientAPI;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,7 +76,6 @@ public class LoaderFragment extends Fragment {
                                 editor.putString(NICKNAME, result.getNickname());
                                 editor.putString(LOGIN, result.getLogin());
                                 editor.putString(PASSWORD, internalCrypt.encode(restCrypt.decode(result.getPassword())));
-                                Log.d("DEBUG", restCrypt.decode(result.getPassword()));
                                 editor.putString(CHAT_CONTAINER_NAME, result.getChatContainerName());
                                 editor.putString(AVATAR_URL, result.getAvatarUrl() == null ? "" : result.getAvatarUrl());
                                 editor.apply();
@@ -141,9 +136,14 @@ public class LoaderFragment extends Fragment {
                 break;
             case BUNDLE_TYPE_IS_LOGIN_CHECK:
                 User mUser = UserLoggedIn.getUser(getContext());
-                if (mUser != null) {
-                    mUser.setPassword(new Crypt(RestCrypt.KEY).encode(mUser.getPassword()));
+                if (mUser == null) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(R.id.fragment, new LoginFragment())
+                            .commit();
+                    ((MainActivity) getActivity()).removeButLastFragment();
+                    break;
                 }
+                mUser.setPassword(new Crypt(RestCrypt.KEY).encode(mUser.getPassword()));
                 clientAPI.login(TOKEN_VALUE, mUser)
                         .enqueue(new Callback<User>() {
                             @Override
@@ -156,18 +156,6 @@ public class LoaderFragment extends Fragment {
                                             .add(R.id.fragment, new MainFragment())
                                             .commit();
                                     ((MainActivity) getActivity()).removeButLastFragment();
-                                    clientAPI.goOnline(TOKEN_VALUE, user.getId())
-                                            .enqueue(new Callback<ResponseBody>() {
-                                                @Override
-                                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                                                }
-
-                                                @Override
-                                                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                                                }
-                                            });
                                     return;
                                 }
                                 onFailure(call, new Exception());

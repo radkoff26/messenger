@@ -12,6 +12,8 @@
     <string name="password_length_error">Password length must be more than 6 symbols</string>
     <string name="login_error_text">Login must contain only symbols a–z and 0–9</string>
     <string name="empty_nickname_error">You should type a nickname!</string>
-    <string name="wrong_data">Login or password are wrong!</string>
+    <string name="wrong_data">Login or password is wrong!</string>
     <string name="user_exists">User with such login already exists!</string>
+    <string name="upload_photo">Upload photo</string>
+    <string name="logout">Logout</string>
 </resources>

@@ -15,24 +15,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.messenger.MainActivity;
 import com.example.messenger.R;
 import com.example.messenger.fragments.ChatFragment;
-import com.example.messenger.fragments.ChatsFragment;
 import com.example.messenger.models.User;
 import com.example.messenger.models.UserLoggedIn;
+import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import static com.example.messenger.models.Constants.BASE_URL;
 import static com.example.messenger.models.Constants.BUNDLE_CHAT_ID;
 
 public class UsersRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<User> users;
-    private Context context;
-    private LayoutInflater inflater;
-    private WeakReference<MainActivity> reference;
+    // Variables
+    private final List<User> users;
+    private final Context context;
+    private final LayoutInflater inflater;
+    private final WeakReference<MainActivity> reference;
 
-    public class UsersViewHolder extends RecyclerView.ViewHolder {
+    // ViewHolder
+    public static final class UsersViewHolder extends RecyclerView.ViewHolder {
 
+        // Views
         final LinearLayout layout;
         final ImageView avatar;
         final TextView nickname, login;
@@ -59,23 +63,42 @@ public class UsersRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         return new UsersViewHolder(inflater.inflate(R.layout.user_item, parent, false));
     }
 
-    // TODO: 16.07.2021 fix self-call
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        // User object
         User user = users.get(position);
+
+        // ViewHolder object
         UsersViewHolder viewHolder = (UsersViewHolder) holder;
-        viewHolder.login.setText("@" + user.getLogin());
+
+        // Setting data into the views
+        viewHolder.login.setText(String.format("%s%s", "@", user.getLogin()));
         viewHolder.nickname.setText(user.getNickname());
+
+        // Setting OnClickListener
         viewHolder.layout.setOnClickListener(v -> {
-            String chat_id = UserLoggedIn.getUser(context).getId() + "_" + user.getId();
-            ChatFragment fragment = new ChatFragment();
-            Bundle arguments = new Bundle();
-            arguments.putString(BUNDLE_CHAT_ID, chat_id);
-            fragment.setArguments(arguments);
-            reference.get().getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment, fragment)
-                    .commit();
+            User currentUser = UserLoggedIn.getUser(context);
+            if (currentUser != null) {
+                String chat_id = currentUser.getId() + "_" + user.getId();
+
+                ChatFragment fragment = new ChatFragment();
+                Bundle arguments = new Bundle();
+                arguments.putString(BUNDLE_CHAT_ID, chat_id);
+                fragment.setArguments(arguments);
+
+                reference.get().getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment, fragment)
+                        .commit();
+            }
         });
+
+        // Setting up avatar of user
+        if (user.getAvatarUrl() != null && !user.getAvatarUrl().equals("null")) {
+            Picasso.with(context)
+                    .load(BASE_URL + "/getAvatar?url=" + user.getAvatarUrl())
+                    .placeholder(R.drawable.user_round)
+                    .into(viewHolder.avatar);
+        }
     }
 
     @Override

@@ -5,7 +5,7 @@
     android:layout_height="56dp"
     android:orientation="horizontal">
 
-    <ImageView
+    <com.example.messenger.view_models.RoundedImageView
         android:id="@+id/avatar"
         android:layout_width="48dp"
         android:layout_height="48dp"

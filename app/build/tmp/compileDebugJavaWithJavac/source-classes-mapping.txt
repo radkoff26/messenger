@@ -1,9 +1,14 @@
 com/example/messenger/models/Constants.java
  com.example.messenger.models.Constants
+com/example/messenger/fragments/UsersFragment.java
+ com.example.messenger.fragments.UsersFragment
+ com.example.messenger.fragments.UsersFragment$1
+ com.example.messenger.fragments.UsersFragment$1$1
 com/example/messenger/MainActivity.java
  com.example.messenger.MainActivity
  com.example.messenger.MainActivity$1
- com.example.messenger.MainActivity$2
+com/example/messenger/view_models/RoundedImageView.java
+ com.example.messenger.view_models.RoundedImageView
 com/example/messenger/BuildConfig.java
  com.example.messenger.BuildConfig
 com/example/messenger/fragments/ChatFragment.java
@@ -14,18 +19,9 @@ com/example/messenger/fragments/ChatFragment.java
  com.example.messenger.fragments.ChatFragment$3
  com.example.messenger.fragments.ChatFragment$4
  com.example.messenger.fragments.ChatFragment$5
-com/example/messenger/rest/ServerInteraction.java
- com.example.messenger.rest.ServerInteraction
- com.example.messenger.rest.ServerInteraction$1
-com/example/messenger/fragments/ContactFragment.java
- com.example.messenger.fragments.ContactFragment
- com.example.messenger.fragments.ContactFragment$1
- com.example.messenger.fragments.ContactFragment$1$1
 com/example/messenger/fragments/ChatsFragment.java
  com.example.messenger.fragments.ChatsFragment
  com.example.messenger.fragments.ChatsFragment$1
-com/example/messenger/models/TestData.java
- com.example.messenger.models.TestData
 com/example/messenger/adapters/ChatRecyclerViewAdapter.java
  com.example.messenger.adapters.ChatRecyclerViewAdapter
  com.example.messenger.adapters.ChatRecyclerViewAdapter$1
@@ -33,28 +29,23 @@ com/example/messenger/adapters/ChatRecyclerViewAdapter.java
 com/example/messenger/adapters/ChatsRecyclerViewAdapter.java
  com.example.messenger.adapters.ChatsRecyclerViewAdapter
  com.example.messenger.adapters.ChatsRecyclerViewAdapter$1
+ com.example.messenger.adapters.ChatsRecyclerViewAdapter$2
  com.example.messenger.adapters.ChatsRecyclerViewAdapter$ChatsViewHolder
 com/example/messenger/fragments/LoaderFragment.java
  com.example.messenger.fragments.LoaderFragment
  com.example.messenger.fragments.LoaderFragment$1
  com.example.messenger.fragments.LoaderFragment$2
  com.example.messenger.fragments.LoaderFragment$3
- com.example.messenger.fragments.LoaderFragment$3$1
 com/example/messenger/fragments/RegisterFragment.java
  com.example.messenger.fragments.RegisterFragment
- com.example.messenger.fragments.RegisterFragment$RegistrationLoader
- com.example.messenger.fragments.RegisterFragment$RegistrationLoader$1
- com.example.messenger.fragments.RegisterFragment$RegistrationLoaderCallbacks
-com/example/messenger/view_models/DefaultActionBar.java
- com.example.messenger.view_models.DefaultActionBar
 com/example/messenger/models/Chat.java
  com.example.messenger.models.Chat
-com/example/messenger/rest/DataLoaderCallbacks.java
- com.example.messenger.rest.DataLoaderCallbacks
 com/example/messenger/fragments/MainFragment.java
  com.example.messenger.fragments.MainFragment
  com.example.messenger.fragments.MainFragment$1
  com.example.messenger.fragments.MainFragment$2
+ com.example.messenger.fragments.MainFragment$3
+ com.example.messenger.fragments.MainFragment$4
 com/example/messenger/models/DateConverter.java
  com.example.messenger.models.DateConverter
 com/example/messenger/crypt/DeviceCrypt.java
@@ -65,17 +56,12 @@ com/example/messenger/crypt/RestCrypt.java
  com.example.messenger.crypt.RestCrypt
 com/example/messenger/models/UserLoggedIn.java
  com.example.messenger.models.UserLoggedIn
-com/example/messenger/rest/DataLoader.java
- com.example.messenger.rest.DataLoader
 com/example/messenger/adapters/FragmentAdapter.java
  com.example.messenger.adapters.FragmentAdapter
 com/example/messenger/crypt/Crypt.java
  com.example.messenger.crypt.Crypt
 com/example/messenger/fragments/LoginFragment.java
  com.example.messenger.fragments.LoginFragment
- com.example.messenger.fragments.LoginFragment$LoginLoader
- com.example.messenger.fragments.LoginFragment$LoginLoader$1
- com.example.messenger.fragments.LoginFragment$LoginLoaderCallbacks
 com/example/messenger/rest/ClientAPI.java
  com.example.messenger.rest.ClientAPI
 com/example/messenger/adapters/UsersRecyclerViewAdapter.java
@@ -87,3 +73,5 @@ com/example/messenger/models/MessageSending.java
  com.example.messenger.models.MessageSending
 com/example/messenger/fragments/ProfileFragment.java
  com.example.messenger.fragments.ProfileFragment
+ com.example.messenger.fragments.ProfileFragment$1
+ com.example.messenger.fragments.ProfileFragment$2

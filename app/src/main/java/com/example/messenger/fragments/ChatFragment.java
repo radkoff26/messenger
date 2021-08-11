@@ -33,13 +33,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.messenger.models.Constants.BASE_URL;
-import static com.example.messenger.models.Constants.BUNDLE_CHAT_ID;
-import static com.example.messenger.models.Constants.TOKEN_VALUE;
+import static com.example.messenger.models.Constants.*;
 
 public class ChatFragment extends Fragment {
 
-    private ChatRecyclerViewAdapter adapter;
     private RecyclerView chat;
     private Retrofit retrofit;
     private ClientAPI clientAPI;
@@ -59,7 +56,7 @@ public class ChatFragment extends Fragment {
 
         Bundle arguments = getArguments();
 
-        chat_id = arguments.getString(BUNDLE_CHAT_ID);
+        chat_id = arguments != null ? arguments.getString(BUNDLE_CHAT_ID) : "-";
 
         chat = view.findViewById(R.id.chat);
         textOfMessage = view.findViewById(R.id.textOfMessage);
@@ -180,8 +177,16 @@ public class ChatFragment extends Fragment {
 
     @Override
     public void onPause() {
-        super.onPause();
         handler.removeCallbacks(updateMessages);
+        super.onPause();
+        List<Fragment> fragments = getActivity().getSupportFragmentManager().getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment.getClass() == UsersFragment.class) {
+                ((MainActivity) getActivity()).setDefaultBackActionBar();
+                return;
+            }
+        }
+        ((MainActivity) getActivity()).setDefaultActionBar();
     }
 
     public void updateChat() {

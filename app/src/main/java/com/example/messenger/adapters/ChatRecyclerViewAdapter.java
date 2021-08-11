@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
@@ -37,17 +36,19 @@ import static com.example.messenger.models.Constants.TOKEN_VALUE;
 
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    // Time pattern to display time
     public static final String TIME_PATTERN = "h:mm a";
 
-    private List<Message> messages;
-    private Context context;
-    private LayoutInflater inflater;
-    private Retrofit retrofit;
-    private ClientAPI clientAPI;
-    private String chat_id;
+    // Variables
+    private final List<Message> messages;
+    private final Context context;
+    private final LayoutInflater inflater;
+    private final String chat_id;
 
-    public class ChatViewHolder extends RecyclerView.ViewHolder {
+    // ViewHolder for RecyclerView
+    public static final class ChatViewHolder extends RecyclerView.ViewHolder {
 
+        // Views
         final LinearLayout main, secondary;
         final TextView messageText, time;
         final ImageView status;
@@ -77,21 +78,28 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        // Message object to receive necessary information
         Message message = messages.get(position);
+
+        // Getting current user
         User current = UserLoggedIn.getUser(context);
+
+        // Initializing holder
         ChatViewHolder viewHolder = (ChatViewHolder) holder;
-        if (!current.getId().equals(message.getAuthorId())) {
+
+        // Checking if the last message was written by current user
+        if (current != null && !current.getId().equals(message.getAuthorId())) {
             viewHolder.main.setGravity(Gravity.START);
             viewHolder.secondary.setGravity(Gravity.START);
             viewHolder.messageText.setBackgroundResource(R.drawable.chatter_message);
             viewHolder.messageText.setTextColor(Color.WHITE);
             viewHolder.status.setVisibility(View.GONE);
             if (!message.getIsWatched()) {
-                retrofit = new Retrofit.Builder()
+                Retrofit retrofit = new Retrofit.Builder()
                         .addConverterFactory(GsonConverterFactory.create())
                         .baseUrl(BASE_URL)
                         .build();
-                clientAPI = retrofit.create(ClientAPI.class);
+                ClientAPI clientAPI = retrofit.create(ClientAPI.class);
                 clientAPI.watchMessage(TOKEN_VALUE, chat_id + " " + message.getId())
                         .enqueue(new Callback<ResponseBody>() {
                             @Override
@@ -111,6 +119,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             }
         }
 
+        // Setting up time to the message
         viewHolder.messageText.setText(message.getText());
         String time = "-";
         SimpleDateFormat sdf = new SimpleDateFormat(TIME_PATTERN);

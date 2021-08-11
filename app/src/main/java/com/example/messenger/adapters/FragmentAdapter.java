@@ -16,6 +16,7 @@ public class FragmentAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
+        // Managing fragments on the TabLayout
         switch (position) {
             case 0:
                 return new ChatsFragment();

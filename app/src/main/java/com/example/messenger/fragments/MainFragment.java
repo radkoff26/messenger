@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,14 +22,14 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.messenger.models.Constants.BASE_URL;
-import static com.example.messenger.models.Constants.TOKEN_VALUE;
+import static com.example.messenger.models.Constants.*;
 
 public class MainFragment extends Fragment {
 
@@ -40,7 +39,6 @@ public class MainFragment extends Fragment {
     private Integer sumOfNotChecked;
     private Runnable updateServer;
     private Handler handler;
-    private ImageView loader;
     private Retrofit retrofit;
     private ClientAPI clientAPI;
     public static List<Chat> mChats = null;
@@ -51,8 +49,6 @@ public class MainFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-
-        loader = view.findViewById(R.id.loader);
 
         ((MainActivity) getActivity()).setDefaultActionBar();
 
@@ -75,11 +71,35 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        clientAPI.goOnline(TOKEN_VALUE, UserLoggedIn.getUser(getContext()).getId())
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
         handler.post(updateServer);
     }
 
     @Override
     public void onPause() {
+        clientAPI.goOffline(TOKEN_VALUE, UserLoggedIn.getUser(getContext()).getId())
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
         super.onPause();
         handler.removeCallbacks(updateServer);
     }

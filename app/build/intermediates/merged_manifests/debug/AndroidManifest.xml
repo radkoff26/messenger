@@ -9,6 +9,8 @@
         android:targetSdkVersion="30" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -21,7 +23,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.Messenger"
         android:usesCleartextTraffic="true" >
-        <activity android:name="com.example.messenger.MainActivity" >
+        <activity
+            android:name="com.example.messenger.MainActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

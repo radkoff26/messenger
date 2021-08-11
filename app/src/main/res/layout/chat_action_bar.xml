@@ -18,10 +18,10 @@
         android:background="@drawable/back"
         app:backgroundTint="@color/white" />
 
-    <ImageView
+    <com.example.messenger.view_models.RoundedImageView
         android:id="@+id/user_avatar"
         android:layout_width="48dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_gravity="center_vertical"
         android:src="@drawable/user_round" />
 
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="USER NAME"
             android:textColor="@color/white"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/lastOnlineStatus"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:text="Last online"
             android:textColor="@color/white"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
     </LinearLayout>
 

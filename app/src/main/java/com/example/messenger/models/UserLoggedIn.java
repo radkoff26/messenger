@@ -10,8 +10,6 @@ import static com.example.messenger.models.Constants.*;
 
 public class UserLoggedIn {
 
-    private User user;
-
     public static User getUser(Context ctx) {
         SharedPreferences sp = ctx.getSharedPreferences(USER_DATA, Context.MODE_PRIVATE);
         if (!sp.contains(ID)) {

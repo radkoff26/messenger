@@ -1,6 +1,5 @@
 package com.example.messenger.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -32,8 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.messenger.models.Constants.BASE_URL;
-import static com.example.messenger.models.Constants.TOKEN_VALUE;
+import static com.example.messenger.models.Constants.*;
 
 public class ChatsFragment extends Fragment {
 
@@ -77,7 +75,7 @@ public class ChatsFragment extends Fragment {
         search.setOnClickListener(v -> {
             getActivity().getSupportFragmentManager().beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .add(R.id.fragment, new ContactFragment())
+                    .add(R.id.fragment, new UsersFragment())
                     .commit();
         });
 
@@ -95,12 +93,6 @@ public class ChatsFragment extends Fragment {
     public void onPause() {
         super.onPause();
         handler.removeCallbacks(updateMessages);
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
     }
 
     public void updateData() {

@@ -10,16 +10,6 @@ public class Chat {
     private String chatterLocalNickname;
     private Integer notChecked;
 
-    public Chat(String id, Integer chatter1, Integer chatter2, Boolean isRemoved, Message lastMessage, String chatterLocalNickname, Integer notChecked) {
-        this.id = id;
-        this.chatter1 = chatter1;
-        this.chatter2 = chatter2;
-        this.isRemoved = isRemoved;
-        this.lastMessage = lastMessage;
-        this.chatterLocalNickname = chatterLocalNickname;
-        this.notChecked = notChecked;
-    }
-
     public Chat(String id, Integer chatter1, Integer chatter2, Boolean isRemoved) {
         this.id = id;
         this.chatter1 = chatter1;

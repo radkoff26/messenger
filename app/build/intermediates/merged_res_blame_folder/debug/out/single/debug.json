@@ -48,12 +48,12 @@
         "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\layout\\fragment_login.xml"
     },
     {
-        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
-    },
-    {
         "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher_round.png.flat",
         "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
     },
     {
         "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable_sent.xml.flat",
@@ -64,8 +64,8 @@
         "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_java.jpg.flat",
-        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\drawable-v24\\java.jpg"
+        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
         "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_message_24.xml.flat",
@@ -76,8 +76,8 @@
         "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\layout\\fragment_register.xml"
     },
     {
-        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
+        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable_user_icon.png.flat",
+        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\drawable\\user_icon.png"
     },
     {
         "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
@@ -88,16 +88,16 @@
         "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\layout\\message_item.xml"
     },
     {
-        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_circle_24.xml.flat",
-        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\drawable\\ic_baseline_circle_24.xml"
-    },
-    {
         "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_chat.xml.flat",
         "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\layout\\fragment_chat.xml"
     },
     {
         "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable_pencil.png.flat",
         "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\drawable\\pencil.png"
+    },
+    {
+        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_circle_24.xml.flat",
+        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\drawable\\ic_baseline_circle_24.xml"
     },
     {
         "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\layout_chat_item.xml.flat",
@@ -112,10 +112,6 @@
         "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\layout\\chat_action_bar.xml"
     },
     {
-        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_file.jpg.flat",
-        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\drawable-v24\\file.jpg"
-    },
-    {
         "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable_back.xml.flat",
         "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\drawable\\back.xml"
     },
@@ -128,32 +124,20 @@
         "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\animator_slide_down.xml.flat",
-        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\animator\\slide_down.xml"
-    },
-    {
-        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\animator_slide_up.xml.flat",
-        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\animator\\slide_up.xml"
-    },
-    {
-        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable_magnify.png.flat",
-        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\drawable\\magnify.png"
+        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\layout_user_item.xml.flat",
+        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\layout\\user_item.xml"
     },
     {
         "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable_user.png.flat",
         "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\drawable\\user.png"
     },
     {
-        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\layout_user_item.xml.flat",
-        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\layout\\user_item.xml"
+        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable_checked.xml.flat",
+        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\drawable\\checked.xml"
     },
     {
         "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
         "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
-    },
-    {
-        "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\drawable_checked.xml.flat",
-        "source": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\src\\main\\res\\drawable\\checked.xml"
     },
     {
         "merged": "C:\\Users\\radko\\OneDrive\\Android\\messenger\\app\\build\\intermediates\\res\\merged\\debug\\layout_default_back_action_bar.xml.flat",
