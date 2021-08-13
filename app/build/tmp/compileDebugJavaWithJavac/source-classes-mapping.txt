@@ -11,6 +11,8 @@ com/example/messenger/view_models/RoundedImageView.java
  com.example.messenger.view_models.RoundedImageView
 com/example/messenger/BuildConfig.java
  com.example.messenger.BuildConfig
+com/example/messenger/tools/Storage.java
+ com.example.messenger.tools.Storage
 com/example/messenger/fragments/ChatFragment.java
  com.example.messenger.fragments.ChatFragment
  com.example.messenger.fragments.ChatFragment$1
@@ -38,6 +40,8 @@ com/example/messenger/fragments/LoaderFragment.java
  com.example.messenger.fragments.LoaderFragment$3
 com/example/messenger/fragments/RegisterFragment.java
  com.example.messenger.fragments.RegisterFragment
+com/example/messenger/models/ChatState.java
+ com.example.messenger.models.ChatState
 com/example/messenger/models/Chat.java
  com.example.messenger.models.Chat
 com/example/messenger/fragments/MainFragment.java

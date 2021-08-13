@@ -1,6 +1,7 @@
 package com.example.messenger.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +19,15 @@ import com.example.messenger.MainActivity;
 import com.example.messenger.R;
 import com.example.messenger.fragments.ChatFragment;
 import com.example.messenger.models.Chat;
+import com.example.messenger.models.ChatState;
 import com.example.messenger.models.DateConverter;
 import com.example.messenger.models.User;
 import com.example.messenger.models.UserLoggedIn;
 import com.example.messenger.rest.ClientAPI;
+import com.example.messenger.tools.Storage;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +49,8 @@ public class ChatsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     public static final String TIME_PATTERN = "h:mm a";
 
     // Variables
-    private final List<Chat> chats;
+    private List<Chat> chats;
+    private final List<ChatState> lastState;
     private final Context context;
     private final LayoutInflater inflater;
     private final WeakReference<MainActivity> reference;
@@ -70,11 +75,18 @@ public class ChatsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
-    public ChatsRecyclerViewAdapter(List<Chat> chats, Context context, MainActivity activity) {
+    public ChatsRecyclerViewAdapter(List<Chat> chats, List<ChatState> lastState, Context context, MainActivity activity) {
         this.chats = chats;
+        this.lastState = lastState;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.reference = new WeakReference<>(activity);
+    }
+
+    public void refresh(List<Chat> chats) {
+        this.chats.clear();
+        this.chats.addAll(chats);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -87,6 +99,14 @@ public class ChatsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         // Chat object to receive necessary information
         Chat chat = chats.get(position);
+
+        ChatState state = null;
+
+        for (ChatState chatState : lastState) {
+            if (chatState.getChatId().equals(chat.getId())) {
+                state = chatState;
+            }
+        }
 
         // Holder
         ChatsViewHolder viewHolder = (ChatsViewHolder) holder;
@@ -124,12 +144,30 @@ public class ChatsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                 .build();
         ClientAPI clientAPI = retrofit.create(ClientAPI.class);
 
+        if (state != null) {
+            if (state.getOnline()) {
+                viewHolder.userStatus.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.userStatus.setVisibility(View.GONE);
+            }
+        }
+
         // Check if chatter is online
+        ChatState mFinalState = state;
         clientAPI.isUserOnline(TOKEN_VALUE, chatterId)
                 .enqueue(new Callback<Boolean>() {
                     @Override
                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                         Boolean f = response.body();
+
+                        if (mFinalState != null && f != null) {
+                            for (ChatState chatState : lastState) {
+                                if (chatState.getChatId().equals(chat.getId())) {
+                                    chatState.setOnline(f);
+                                }
+                            }
+                        }
+
                         if (f != null && f) {
                             viewHolder.userStatus.setVisibility(View.VISIBLE);
                             return;
@@ -172,6 +210,19 @@ public class ChatsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         });
 
         // Getting chatter's image
+        ChatState finalState = state;
+
+        if (finalState != null) {
+            boolean f = Storage.getAndSetImageIfExists(finalState.getUrl(), context, viewHolder.avatar);
+            if (!f) {
+                new Thread(() -> Storage.saveImage(finalState.getUrl(), context)).start();
+                Picasso.with(context)
+                        .load(BASE_URL + "/getAvatar?url=" + finalState.getUrl())
+                        .placeholder(R.drawable.user_round)
+                        .into(viewHolder.avatar);
+            }
+        }
+
         clientAPI.getUser(TOKEN_VALUE, chatterId)
                 .enqueue(new Callback<User>() {
                     @Override
@@ -179,11 +230,32 @@ public class ChatsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                         User user = response.body();
 
                         if (user != null) {
-                            if (user.getAvatarUrl() != null && !user.getAvatarUrl().equals("null")) {
-                                Picasso.with(context)
-                                        .load(BASE_URL + "/getAvatar?url=" + user.getAvatarUrl())
-                                        .placeholder(R.drawable.user_round)
-                                        .into(viewHolder.avatar);
+                            if (finalState == null) {
+                                boolean f = Storage.getAndSetImageIfExists(user.getAvatarUrl(), context, viewHolder.avatar);
+                                if (!f) {
+                                    new Thread(() -> Storage.saveImage(user.getAvatarUrl(), context)).start();
+                                    Picasso.with(context)
+                                            .load(BASE_URL + "/getAvatar?url=" + user.getAvatarUrl())
+                                            .placeholder(R.drawable.user_round)
+                                            .into(viewHolder.avatar);
+                                }
+                                lastState.add(new ChatState(chat.getId(), user.getAvatarUrl(), user.getIsOnline()));
+                            } else if (!finalState.getUrl().equals(user.getAvatarUrl())) {
+                                for (ChatState chatState : lastState) {
+                                    if (chatState.getChatId().equals(chat.getId())) {
+                                        chatState.setUrl(user.getAvatarUrl());
+                                    }
+                                }
+                                if (user.getAvatarUrl() != null && !user.getAvatarUrl().equals("null")) {
+                                    boolean f = Storage.getAndSetImageIfExists(user.getAvatarUrl(), context, viewHolder.avatar);
+                                    if (!f) {
+                                        new Thread(() -> Storage.saveImage(user.getAvatarUrl(), context)).start();
+                                        Picasso.with(context)
+                                                .load(BASE_URL + "/getAvatar?url=" + user.getAvatarUrl())
+                                                .placeholder(R.drawable.user_round)
+                                                .into(viewHolder.avatar);
+                                    }
+                                }
                             }
                         }
                     }

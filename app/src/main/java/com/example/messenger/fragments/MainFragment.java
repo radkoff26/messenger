@@ -62,7 +62,7 @@ public class MainFragment extends Fragment {
 
         updateServer = () -> {
             updateData();
-            handler.postDelayed(updateServer, 2000);
+            handler.postDelayed(updateServer, 1000);
         };
 
         return view;

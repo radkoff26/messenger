@@ -1,15 +1,11 @@
 package com.example.messenger;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +28,6 @@ import com.squareup.picasso.Picasso;
 
 import org.apache.commons.io.IOUtil;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -52,9 +47,7 @@ import static com.example.messenger.models.Constants.*;
 public class MainActivity extends AppCompatActivity {
 
     private FrameLayout actionBar;
-    private Retrofit retrofit;
     private ClientAPI clientAPI;
-    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,17 +56,20 @@ public class MainActivity extends AppCompatActivity {
 
         actionBar = findViewById(R.id.action_bar);
 
-        gson = new GsonBuilder()
+        Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
 
         actionBar.setVisibility(View.GONE);
-        retrofit = new Retrofit.Builder()
+
+        Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(BASE_URL)
                 .build();
+
         clientAPI = retrofit.create(ClientAPI.class);
 
+        // Transaction and setting arguments up
         LoaderFragment fragment = new LoaderFragment();
         Bundle arguments = new Bundle();
         arguments.putString(BUNDLE_TYPE, BUNDLE_TYPE_IS_LOGIN_CHECK);
@@ -84,13 +80,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void removeButLastFragment() {
+        // If the first fragment is MainFragment, then it's not going to be removed
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
+
         int k = 0;
+
         if (fragments.size() == 2) {
             if (fragments.get(0).getClass() == MainFragment.class) {
                 k = 1;
             }
         }
+
         for (int i = k; i < fragments.size() - 1; i++) {
             getSupportFragmentManager().beginTransaction()
                     .remove(fragments.get(i))
@@ -102,31 +102,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
+            // Resolving avatar updating
             Uri content_describer = data.getData();
+
             try {
                 InputStream in = getContentResolver().openInputStream(content_describer);
 
                 byte[] dataFile = IOUtil.toByteArray(in);
 
-                RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), dataFile);
-                MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", "java", requestBody);
+                RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), dataFile);
+                MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", "file", requestBody);
 
-                clientAPI.setAvatar(TOKEN_VALUE, UserLoggedIn.getUser(getApplicationContext()).getId(), fileToUpload)
-                        .enqueue(new Callback<String>() {
-                            @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
-                                String url = response.body();
-                                SharedPreferences sp = getSharedPreferences(USER_DATA, MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sp.edit();
-                                editor.putString(AVATAR_URL, url);
-                                editor.apply();
-                            }
+                User mUser = UserLoggedIn.getUser(getApplicationContext());
 
-                            @Override
-                            public void onFailure(Call<String> call, Throwable t) {
-                                System.out.println(t.getMessage());
-                            }
-                        });
+                // Sending avatar to the server
+                if (mUser != null) {
+                    clientAPI.setAvatar(TOKEN_VALUE, mUser.getId(), fileToUpload)
+                            .enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    String url = response.body();
+
+                                    // Saving avatar url to the SharedPreferences
+                                    SharedPreferences sp = getSharedPreferences(USER_DATA, MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sp.edit();
+                                    editor.putString(AVATAR_URL, url);
+                                    editor.apply();
+                                }
+
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+
+                                }
+                            });
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -136,26 +145,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
+
         if (!fragments.isEmpty() && fragments.get(fragments.size() - 1).getClass() == LoaderFragment.class) {
             finish();
             return;
         }
+
         if (fragments.size() == 2) {
             if (fragments.get(0).getClass() == MainFragment.class && fragments.get(1).getClass() != ChatFragment.class
                     && fragments.get(1).getClass() != UsersFragment.class) {
-                System.out.println(fragments.get(0).getClass());
-                System.out.println(fragments.get(1).getClass());
                 finish();
                 return;
             }
         }
+
         if (fragments.size() == 1) {
             finish();
             return;
         }
+
         if (fragments.get(fragments.size() - 1).getClass() == ChatFragment.class) {
             setDefaultActionBar();
         }
+
         getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 .remove(fragments.get(fragments.size() - 1))
@@ -166,20 +178,26 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             actionBar.removeAllViews();
             actionBar.setVisibility(View.VISIBLE);
+
             LinearLayout ll = (LinearLayout) getLayoutInflater().inflate(R.layout.chat_action_bar, new FrameLayout(getBaseContext()), false);
+
             ll.findViewById(R.id.back).setOnClickListener(v -> onBackPressed());
+
             ((TextView) ll.findViewById(R.id.nickname)).setText(user.getNickname());
+
             try {
                 ((TextView) ll.findViewById(R.id.lastOnlineStatus)).setText(user.getIsOnline() ? "online" : DateConverter.lastOnline(user.getLastOnline()));
             } catch (ParseException e) {
                 ((TextView) ll.findViewById(R.id.lastOnlineStatus)).setText("-");
             }
+
             if (user.getAvatarUrl() != null && !user.getAvatarUrl().equals("null")) {
                 Picasso.with(getApplicationContext())
                         .load(BASE_URL + "/getAvatar?url=" + user.getAvatarUrl())
                         .placeholder(R.drawable.user_round)
                         .into((RoundedImageView) ll.findViewById(R.id.user_avatar));
             }
+
             actionBar.addView(ll);
         }
     }
@@ -192,7 +210,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void setDefaultBackActionBar() {
         LinearLayout ll = (LinearLayout) getLayoutInflater().inflate(R.layout.default_back_action_bar, new FrameLayout(getBaseContext()), false);
+
         ll.findViewById(R.id.back).setOnClickListener(v -> onBackPressed());
+
         actionBar.removeAllViews();
         actionBar.setVisibility(View.VISIBLE);
         actionBar.addView(ll);

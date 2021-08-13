@@ -3,6 +3,7 @@ package com.example.messenger.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,10 +22,14 @@ import com.example.messenger.R;
 import com.example.messenger.models.User;
 import com.example.messenger.models.UserLoggedIn;
 import com.example.messenger.rest.ClientAPI;
+import com.example.messenger.tools.Storage;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -98,7 +103,7 @@ public class ProfileFragment extends Fragment {
             if (!url.equals(user.getAvatarUrl())) {
                 updateAvatar();
             }
-            handler.postDelayed(runnable, 1000);
+            handler.postDelayed(runnable, 2000);
         };
 
         updateAvatar();

@@ -1,2 +1,6 @@
 This project is my attempt to create a messenger.
 The idea came out when I was using Telegram. It really inspired me.
+
+8/13/2021 - Beta 1.1:
+- fixed blinking of avatars in ChatsFragment
+- by now all images are being downloaded into the cache storage during first facing (then they will be loaded from there without internet)

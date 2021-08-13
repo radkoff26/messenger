@@ -1,6 +1,8 @@
 package com.example.messenger.models;
 
 
+import java.util.Objects;
+
 public class Chat {
     private String id;
     private Integer chatter1;
@@ -83,5 +85,24 @@ public class Chat {
                 ", lastMessage=" + lastMessage +
                 ", chatterLocalNickname='" + chatterLocalNickname + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Chat chat = (Chat) o;
+        return Objects.equals(id, chat.id) &&
+                Objects.equals(chatter1, chat.chatter1) &&
+                Objects.equals(chatter2, chat.chatter2) &&
+                Objects.equals(isRemoved, chat.isRemoved) &&
+                Objects.equals(lastMessage, chat.lastMessage) &&
+                Objects.equals(chatterLocalNickname, chat.chatterLocalNickname) &&
+                Objects.equals(notChecked, chat.notChecked);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, chatter1, chatter2, isRemoved, lastMessage, chatterLocalNickname, notChecked);
     }
 }

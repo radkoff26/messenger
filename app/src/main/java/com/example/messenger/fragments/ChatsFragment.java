@@ -1,5 +1,6 @@
 package com.example.messenger.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.example.messenger.MainActivity;
 import com.example.messenger.R;
 import com.example.messenger.adapters.ChatsRecyclerViewAdapter;
 import com.example.messenger.models.Chat;
+import com.example.messenger.models.ChatState;
 import com.example.messenger.models.UserLoggedIn;
 import com.example.messenger.rest.ClientAPI;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,9 +42,11 @@ public class ChatsFragment extends Fragment {
     private Runnable updateMessages;
     private Handler handler;
     private List<Chat> mChats;
+    private List<ChatState> lastState = new ArrayList<>();
     private Retrofit retrofit;
     private ClientAPI clientAPI;
     private FloatingActionButton search;
+    private ChatsRecyclerViewAdapter adapter;
 
     @Nullable
     @Override
@@ -60,24 +64,24 @@ public class ChatsFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(BASE_URL)
                 .build();
+
         clientAPI = retrofit.create(ClientAPI.class);
+
+        mChats = new ArrayList<>();
+
+        adapter = new ChatsRecyclerViewAdapter(mChats, lastState, getContext(), (MainActivity) getActivity());
+
+        chats.setAdapter(adapter);
 
         updateMessages = () -> {
             updateData();
             handler.postDelayed(updateMessages, 2000);
         };
 
-        if (mChats == null) {
-            loader.setVisibility(View.VISIBLE);
-            loader.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.loader_rotating));
-        }
-
-        search.setOnClickListener(v -> {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .add(R.id.fragment, new UsersFragment())
-                    .commit();
-        });
+        search.setOnClickListener(v -> getActivity().getSupportFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .add(R.id.fragment, new UsersFragment())
+                .commit());
 
         return view;
     }
@@ -87,6 +91,11 @@ public class ChatsFragment extends Fragment {
         super.onResume();
 
         handler.post(updateMessages);
+
+        if (mChats == null) {
+            loader.setVisibility(View.VISIBLE);
+            loader.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.loader_rotating));
+        }
     }
 
     @Override
@@ -114,7 +123,7 @@ public class ChatsFragment extends Fragment {
 
     public void checkAdapter() {
         if (mChats != null) {
-            chats.setAdapter(new ChatsRecyclerViewAdapter(mChats, getContext(), (MainActivity) getActivity()));
+            adapter.refresh(mChats);
             loader.clearAnimation();
             loader.setVisibility(View.GONE);
         }
